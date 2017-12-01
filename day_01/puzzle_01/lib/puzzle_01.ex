@@ -18,6 +18,17 @@ defmodule Puzzle01 do
   def sum(input) when is_integer(input) do
     digits = Integer.digits(input)
 
+    digits ++ [List.first(digits)]
+    |> do_sum(0)
+  end
 
+  defp do_sum([], val), do: val
+  defp do_sum([_ | []], val), do: val
+  defp do_sum([ head | [ next | _] = tail ], val) do
+    new_val = case head == next do
+      true -> val + head
+      false -> val
+    end
+    do_sum(tail, new_val)
   end
 end
